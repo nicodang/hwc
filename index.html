@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Happy Wednesday Club</title>
+    <link rel="icon" href="assets/img/logo.webp" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="stage" aria-label="Happy Wednesday Club — animation de présentation">
+      <!-- Ciel -->
+      <div class="cloud cloud--a"></div>
+      <div class="cloud cloud--b"></div>
+      <div class="cloud cloud--c"></div>
+      <div class="cloud cloud--d"></div>
+      <div class="cloud cloud--e"></div>
+
+      <!-- Skyline de Londres (posée au sol à partir de la scène 2) -->
+      <div id="skyline">
+        <img class="skyline__eye-ben" src="assets/img/skyline-left.webp" alt="" />
+        <img class="skyline__bridge" src="assets/img/bridge.webp" alt="" />
+        <div class="skyline__ground"></div>
+      </div>
+
+      <!-- Scène 1 : le rêve -->
+      <div id="bubble">
+        <div class="bubble__cloud">
+          <div class="bubble__inner">
+            <img class="bubble__eye-ben" src="assets/img/skyline-left.webp" alt="" />
+            <img class="bubble__bridge" src="assets/img/bridge.webp" alt="" />
+            <svg class="bubble__flag flag" viewBox="0 0 60 36" aria-hidden="true">
+              <rect width="60" height="36" fill="#1b3f8f" />
+              <path d="M0 0L60 36M60 0L0 36" stroke="#fff" stroke-width="7" />
+              <path d="M0 0L60 36M60 0L0 36" stroke="#ed2124" stroke-width="2.6" />
+              <path d="M30 0V36M0 18H60" stroke="#fff" stroke-width="11" />
+              <path d="M30 0V36M0 18H60" stroke="#ed2124" stroke-width="6" />
+            </svg>
+          </div>
+        </div>
+        <span class="bubble__dot bubble__dot--1"></span>
+        <span class="bubble__dot bubble__dot--2"></span>
+        <span class="bubble__dot bubble__dot--3"></span>
+      </div>
+
+      <!-- Personnages -->
+      <div id="boy" class="kid">
+        <img class="kid__idle kid__idle--read" src="assets/img/boy.webp" alt="" />
+      </div>
+      <div id="girl" class="kid">
+        <img class="kid__idle kid__idle--run" src="assets/img/girl.webp" alt="" />
+      </div>
+
+      <!-- Scène 2 : titre -->
+      <div id="logo"><img src="assets/img/logo.webp" alt="HWC" /></div>
+      <div id="title">
+        <div class="title__word title__word--red" data-text="HAPPY"></div>
+        <div class="title__word title__word--purple" data-text="WEDNESDAY"></div>
+        <div class="title__word title__word--red" data-text="CLUB"></div>
+      </div>
+      <p id="tagline">And spend your Wednesdays <strong>in English!</strong></p>
+
+      <!-- Scène 3 : l'offre -->
+      <div id="offer">
+        <div class="offer__headline">
+          Offrez à votre enfant une immersion <strong>100% bilingue</strong> le mercredi !
+        </div>
+        <div class="offer__pills">
+          <div class="pill pill--purple offer__pill">De 3 à 11 ans</div>
+          <div class="pill pill--teal offer__pill">
+            <svg class="clock" viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="17" fill="#fff" stroke="#2b2b2b" stroke-width="2.5" />
+              <line class="clock__hour" x1="20" y1="20" x2="20" y2="11" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round" />
+              <line class="clock__minute" x1="20" y1="20" x2="20" y2="7" stroke="#ed2124" stroke-width="2.5" stroke-linecap="round" />
+              <circle cx="20" cy="20" r="2" fill="#2b2b2b" />
+            </svg>
+            De 9h à 18h
+          </div>
+          <div class="pill pill--red offer__pill">Tous les mercredis</div>
+        </div>
+        <p class="offer__line">Forme pratique : jouer, apprendre, déjeuner <strong>100% en anglais</strong></p>
+      </div>
+
+      <!-- Scène 4 : le programme -->
+      <div id="programme">
+        <div class="pill pill--red programme__header">Les activités de la journée</div>
+        <!-- Les activités arrivent une par une et restent affichées (grille 2 × 2). L'ordre n'est pas celui de la journée. -->
+        <div class="card programme__card">
+          <div class="pill pill--purple card__tag">Lecture</div>
+          <h3 class="card__title">Histoires et lecture</h3>
+          <p class="card__text"><strong>Explorer la culture anglo-saxonne.</strong> Histoires et, pour les plus jeunes, lecture d’albums pour enrichir le vocabulaire.</p>
+        </div>
+        <div class="card programme__card">
+          <div class="pill pill--teal card__tag">Sport</div>
+          <h3 class="card__title">Multisport en anglais</h3>
+          <p class="card__text"><strong>Une heure de multisport :</strong> jeux de ballon, cross-training, arts martiaux, danse, athlétisme.</p>
+        </div>
+        <div class="card programme__card">
+          <div class="pill pill--pink card__tag">Arts</div>
+          <h3 class="card__title">Arts et graphismes</h3>
+          <div class="card__abc" aria-hidden="true">
+            <span>A</span><span>B</span><span>C</span>
+            <span class="card__abc-sep"></span>
+            <span>C</span><span>R</span><span>E</span><span>A</span><span>T</span><span>E</span>
+          </div>
+          <p class="card__text"><strong>Ateliers artistiques :</strong> du lettering à l’illustration, passerelles entre langues et arts graphiques.</p>
+        </div>
+        <div class="card programme__card">
+          <div class="pill pill--red card__tag">Langue</div>
+          <h3 class="card__title">Cours d’anglais</h3>
+          <p class="card__text"><strong>Avec une neurolinguiste.</strong> Des cours d’anglais pensés pour les enfants, au cœur de la journée.</p>
+        </div>
+      </div>
+
+      <!-- Scène 5 : le déjeuner -->
+      <div id="lunch">
+        <div class="pill pill--teal lunch__header">Déjeuner bilingue, 100% en anglais</div>
+        <ul class="lunch__list">
+          <li class="lunch__item"><span class="lunch__check lunch__check--red"></span>Un repas convivial</li>
+          <li class="lunch__item"><span class="lunch__check lunch__check--purple"></span>Repas sain avec notre équipe</li>
+          <li class="lunch__item"><span class="lunch__check lunch__check--teal"></span>Immersion continue</li>
+        </ul>
+        <!-- Assiette d'enfant : riz, brocolis, carottes, tomates cerises, verre d'eau et pomme. -->
+        <svg class="lunch__food" viewBox="0 0 360 250" aria-hidden="true">
+          <g class="lunch__plate">
+            <ellipse cx="160" cy="160" rx="150" ry="72" fill="#fff" stroke="#2b2b2b" stroke-width="6" />
+            <ellipse cx="160" cy="160" rx="120" ry="54" fill="none" stroke="#a98bea" stroke-width="5" />
+            <!-- riz -->
+            <ellipse cx="112" cy="150" rx="46" ry="24" fill="#f9e2ad" stroke="#2b2b2b" stroke-width="5" />
+            <circle cx="96" cy="146" r="3" fill="#fff" />
+            <circle cx="118" cy="140" r="3" fill="#fff" />
+            <circle cx="126" cy="156" r="3" fill="#fff" />
+            <!-- brocolis -->
+            <rect x="188" y="136" width="16" height="30" rx="6" fill="#b7d98a" stroke="#2b2b2b" stroke-width="4" />
+            <circle cx="182" cy="122" r="17" fill="#5fae5a" stroke="#2b2b2b" stroke-width="5" />
+            <circle cx="204" cy="114" r="19" fill="#5fae5a" stroke="#2b2b2b" stroke-width="5" />
+            <circle cx="220" cy="132" r="15" fill="#5fae5a" stroke="#2b2b2b" stroke-width="5" />
+            <!-- carottes -->
+            <rect x="60" y="166" width="54" height="14" rx="7" fill="#f59b2b" stroke="#2b2b2b" stroke-width="4" transform="rotate(-18 87 173)" />
+            <rect x="72" y="182" width="54" height="14" rx="7" fill="#f59b2b" stroke="#2b2b2b" stroke-width="4" transform="rotate(-8 99 189)" />
+            <!-- tomates cerises -->
+            <circle cx="160" cy="182" r="13" fill="#ed2124" stroke="#2b2b2b" stroke-width="4" />
+            <path d="M156 170 q4 -8 10 -4" stroke="#5fae5a" stroke-width="4" stroke-linecap="round" fill="none" />
+            <circle cx="190" cy="186" r="11" fill="#ed2124" stroke="#2b2b2b" stroke-width="4" />
+            <path d="M187 176 q4 -8 10 -4" stroke="#5fae5a" stroke-width="4" stroke-linecap="round" fill="none" />
+            <!-- fourchette et cuillère -->
+            <path d="M22 92 v24 q0 12 10 12 q10 0 10 -12 v-24 M28 92 v20 M36 92 v20 M32 128 v70" stroke="#2b2b2b" stroke-width="6" stroke-linecap="round" fill="none" />
+            <path d="M322 104 a11 15 0 1 0 0.1 0 M322 119 v80" stroke="#2b2b2b" stroke-width="6" stroke-linecap="round" fill="#fff" />
+          </g>
+          <g class="lunch__glass">
+            <path d="M268 18 h58 l-6 72 h-46 Z" fill="#dff1fb" stroke="#2b2b2b" stroke-width="5" stroke-linejoin="round" />
+            <path d="M273 44 h48 l-4 46 h-40 Z" fill="#9fd6f2" />
+            <path d="M300 30 l26 -22" stroke="#ed2124" stroke-width="5" stroke-linecap="round" />
+          </g>
+          <g class="lunch__apple">
+            <circle cx="52" cy="48" r="26" fill="#ed2124" stroke="#2b2b2b" stroke-width="5" />
+            <path d="M52 24 q2 -12 10 -16" stroke="#2b2b2b" stroke-width="5" stroke-linecap="round" fill="none" />
+            <path d="M56 20 q14 -8 20 4 q-12 6 -20 -4Z" fill="#5fae5a" stroke="#2b2b2b" stroke-width="4" stroke-linejoin="round" />
+            <circle cx="42" cy="40" r="5" fill="#fff" opacity="0.8" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Scène 6 : inscriptions et stand -->
+      <div id="cta">
+        <div class="cta__register">Register now for 2026-2027 !</div>
+        <div class="cta__url">happywednesdayclub.com</div>
+        <div class="cta__partners"><img src="assets/img/partners.webp" alt="Montessori En Ville · Mariapop School" /></div>
+        <div class="cta__qr"><img src="assets/img/qr.png" alt="QR code happywednesdayclub.com" /></div>
+        <div class="pill pill--pink cta__stand">Venez poser vos questions sur le stand !</div>
+        <!-- Ligne propre au salon KIDS ETC : à adapter ou supprimer pour un autre salon. -->
+        <p class="cta__salon">Salon KIDS ETC · 5 &amp; 6 décembre · Nantes</p>
+      </div>
+
+      <!-- Étincelles -->
+      <div id="sparkles"></div>
+
+      <!-- Réalisation (touche D) -->
+      <div id="hud" hidden></div>
+    </div>
+
+    <script src="show.js"></script>
+  </body>
+</html>
