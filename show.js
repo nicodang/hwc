@@ -15,11 +15,61 @@
 
   // Deux mises en page : paysage 1920 × 1080 (écran de salon) et portrait 1080 × 1920
   // (smartphone, totem vertical). Même chronologie, positions différentes.
-  const PORTRAIT = window.matchMedia("(orientation: portrait)").matches;
+  // Sur Android, Chrome peut élargir le viewport jusqu'au cadre 1920 px.
+  // La media query « orientation » passe alors en paysage sur un téléphone
+  // tenu droit. On ne croit l'orientation de l'appareil que dans ce cas-là.
+  const isAndroid = () => {
+    const data = navigator.userAgentData;
+    if (data && data.platform && /android/i.test(data.platform)) return true;
+    return /Android/i.test(navigator.userAgent || "");
+  };
+
+  const viewportBox = () => {
+    const vv = window.visualViewport;
+    return {
+      width: (vv && vv.width) || document.documentElement.clientWidth || window.innerWidth || 0,
+      height: (vv && vv.height) || document.documentElement.clientHeight || window.innerHeight || 0,
+    };
+  };
+
+  const detectPortrait = () => {
+    const box = viewportBox();
+    const fromViewport = box.width >= 240 && box.height >= 240 ? box.height >= box.width : null;
+    let fromScreen = null;
+    if (isAndroid() && screen.orientation && typeof screen.orientation.type === "string") {
+      if (screen.orientation.type.indexOf("portrait") !== -1) fromScreen = true;
+      else if (screen.orientation.type.indexOf("landscape") !== -1) fromScreen = false;
+    }
+    if (fromViewport === null) {
+      if (fromScreen !== null) return fromScreen;
+      return window.matchMedia("(orientation: portrait)").matches;
+    }
+    if (fromScreen === null || fromScreen === fromViewport) return fromViewport;
+    const screenMin = Math.min(window.screen.width || 0, window.screen.height || 0);
+    const inflated = screenMin >= 200 && box.width > screenMin * 1.25 && box.width > box.height;
+    return inflated ? fromScreen : fromViewport;
+  };
+
+  const PORTRAIT = detectPortrait();
   const W = PORTRAIT ? 1080 : 1920;
   const H = PORTRAIT ? 1920 : 1080;
   document.body.classList.add(PORTRAIT ? "portrait" : "landscape");
-  window.matchMedia("(orientation: portrait)").addEventListener("change", () => window.location.reload());
+
+  const reloadForOrientation = () => {
+    if (detectPortrait() === PORTRAIT) return;
+    try {
+      if (sessionStorage.getItem("hwc-orientation-reload") === "1") return;
+      sessionStorage.setItem("hwc-orientation-reload", "1");
+    } catch (e) {
+      /* navigation privée : on recharge quand même une fois */
+    }
+    window.location.reload();
+  };
+  window.matchMedia("(orientation: portrait)").addEventListener("change", reloadForOrientation);
+  window.addEventListener("orientationchange", reloadForOrientation);
+  if (isAndroid() && screen.orientation && screen.orientation.addEventListener) {
+    screen.orientation.addEventListener("change", reloadForOrientation);
+  }
 
   // Coordonnées écrites pour le paysage, converties pour le portrait (étincelles).
   const sx = (x) => (PORTRAIT ? Math.round((x * 1080) / 1920) : x);
@@ -461,15 +511,53 @@
   animations.forEach((a) => {
     a.startTime = start;
   });
-  document.getElementById("stage").style.visibility = "visible";
 
   const stage = $("#stage");
+  // Chrome Android : window.innerHeight inclut la zone sous la barre d'adresse,
+  // donc l'ancien calcul dessinait le cadre plus grand que l'écran visible.
+  // visualViewport est la zone réellement affichée ; on y recentre le cadre.
   function fit() {
-    const scale = Math.min(window.innerWidth / W, window.innerHeight / H);
-    stage.style.transform = `scale(${scale})`;
+    const vv = window.visualViewport;
+    const android = isAndroid();
+    if (android && vv && Math.abs((vv.scale || 1) - 1) > 0.02) return;
+
+    const viewW = android && vv && vv.width ? vv.width : window.innerWidth;
+    const viewH = android && vv && vv.height ? vv.height : window.innerHeight;
+    let shift = "";
+    if (android && vv && vv.width && vv.height) {
+      const shiftX = Math.round(vv.offsetLeft + viewW / 2 - window.innerWidth / 2);
+      const shiftY = Math.round(vv.offsetTop + viewH / 2 - window.innerHeight / 2);
+      if (Math.abs(shiftX) > 1 || Math.abs(shiftY) > 1) shift = `translate(${shiftX}px, ${shiftY}px) `;
+    }
+    const scale = Math.min(viewW / W, viewH / H);
+    stage.style.transform = `${shift}scale(${scale})`;
   }
   fit();
-  window.addEventListener("resize", fit);
+  stage.style.visibility = "visible";
+  window.addEventListener("resize", () => {
+    fit();
+    reloadForOrientation();
+  });
+  // La barre d'adresse Android change la zone visible sans toujours émettre « resize ».
+  if (isAndroid() && window.visualViewport) {
+    window.visualViewport.addEventListener("resize", fit);
+    window.visualViewport.addEventListener("scroll", fit);
+    window.addEventListener("load", fit);
+    window.addEventListener("pageshow", fit);
+    setTimeout(fit, 350);
+  }
+  requestAnimationFrame(() => {
+    fit();
+    if (detectPortrait() === PORTRAIT) {
+      try {
+        sessionStorage.removeItem("hwc-orientation-reload");
+      } catch (e) {
+        /* ignore */
+      }
+    } else {
+      reloadForOrientation();
+    }
+  });
 
   let paused = false;
   const now = () => animations[0].currentTime % T;

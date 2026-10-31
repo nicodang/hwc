@@ -3,6 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Chrome Android zoome parfois en arrière pour englober le cadre 1920 px.
+         On interdit ce zoom arrière avant la première mise en page. iOS n'est pas concerné. -->
+    <script>
+      (function () {
+        var ua = navigator.userAgent || "";
+        var android = /Android/i.test(ua);
+        if (!android && navigator.userAgentData && navigator.userAgentData.platform === "Android") android = true;
+        if (!android) return;
+        document.documentElement.classList.add("android");
+        var meta = document.querySelector('meta[name="viewport"]');
+        if (meta) meta.setAttribute("content", "width=device-width, initial-scale=1, minimum-scale=1");
+      })();
+    </script>
     <meta name="robots" content="noindex" />
     <title>Happy Wednesday Club</title>
     <link rel="icon" href="assets/img/logo.webp" />
